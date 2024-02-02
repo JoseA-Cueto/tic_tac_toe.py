@@ -1,4 +1,6 @@
 import random
+import tkinter as tk
+from tkinter import Button, messagebox
 
 class TicTacToe:
     def __init__(self):
@@ -79,26 +81,65 @@ class TicTacToe:
         return best_score, best_move
 
 
-game = TicTacToe()
+class TicTacToeGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Tic Tac Toe")
+        
+        self.game = TicTacToe()
+        
+        self.buttons = []
+        for i in range(3):
+            row_buttons = []
+            for j in range(3):
+                button = tk.Button(self.root, text="", font=('normal', 20), width=5, height=2,
+                                   command=lambda row=i, col=j: self.on_button_click(row, col))
+                button.grid(row=i, column=j)
+                row_buttons.append(button)
+            self.buttons.append(row_buttons)
 
-while not game.check_winner() and not game.is_board_full():
-    game.print_board()
+        # Contenedor para los botones
+        button_frame = tk.Frame(self.root)
+        button_frame.grid(row=3, column=0, columnspan=3)
 
-    try:
-        move = int(input(f"{game.current_player}, elige una posición (1-9): "))
-        if game.make_move(move):
-            game.make_computer_move()
-    except ValueError:
-        print("Por favor, ingresa un número válido.")
+        # Botón de reinicio
+        restart_button = Button(button_frame, text="Reiniciar", command=self.restart_game)
+        restart_button.pack(side=tk.LEFT)
 
-game.print_board()
+    def on_button_click(self, row, col):
+        if self.game.make_move(row * 3 + col + 1):
+            self.update_board()
+            if not self.game.check_winner() and not self.game.is_board_full():
+                self.game.make_computer_move()
+                self.update_board()
+                if self.game.check_winner():
+                    self.show_winner()
+            elif self.game.is_board_full():
+                messagebox.showinfo("Empate", "¡Empate!")
+            else:
+                self.show_winner()
 
-if game.check_winner():
-    if game.current_player == "X":
-        print("¡Felicidades! Ganaste.")
-    elif game.current_player == "O":
-        print("El ordenador ha vencido.")
-else:
-    print("¡Empate!")
+    def update_board(self):
+        for i in range(3):
+            for j in range(3):
+                self.buttons[i][j]['text'] = self.game.board[i * 3 + j]
 
-print("Juego terminado.")
+    def show_winner(self):
+        if self.game.check_winner():
+            winner_message = "¡Felicidades! Ganaste." if self.game.current_player == "O" else "El ordenador ha vencido."
+        else:
+            winner_message = "¡Empate!"
+
+        # Mensaje con el botón de reinicio
+        result = messagebox.showinfo("¡Juego Terminado!", winner_message)
+        if result == "ok":
+            self.restart_game()
+
+    def restart_game(self):
+        self.game = TicTacToe()
+        self.update_board()
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = TicTacToeGUI(root)
+    root.mainloop()
