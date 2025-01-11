@@ -1,17 +1,18 @@
-# Implementación de Lógica Minimax en Python
+# Minimax Logic Implementation in Python
+## Description
+This project is a practice in logic using the Minimax algorithm in Python. The goal is to implement and understand how the Minimax algorithm works, which is used in two-player games to find the best possible move by simulating different scenarios.
 
-## Descripción
-Este proyecto es una práctica de lógica utilizando el algoritmo Minimax en Python. El objetivo es implementar y entender el funcionamiento del algoritmo Minimax, que se utiliza en juegos de dos jugadores para buscar la mejor jugada posible al simular diferentes escenarios.
+## Features
+Implementation of the Minimax algorithm in Python.
 
-## Características
-- Implementación del algoritmo Minimax en Python.
-- Ejemplos de uso aplicados a un juego de prueba.
-- Comentarios y explicaciones en el código para facilitar la comprensión.
+Usage examples applied to a test game.
 
-## Requisitos
-- Python 3.8 o superior
+Comments and explanations in the code to facilitate understanding.
+
+## Requirements
+Python 3.8 or higher
 
 ## Instalación
-1. Clona el repositorio:
+1. Clone the repository:
    ```bash
    git clone https://github.com/JoseA-Cueto/tic_tac_toe.py.git
